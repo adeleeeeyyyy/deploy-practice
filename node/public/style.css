@@ -1,0 +1,85 @@
+:root {
+  --paper: #f4efe5;
+  --paper-2: #eae3d5;
+  --ink: #1b1712;
+  --ink-2: #4a4239;
+  --rule: #c6bba6;
+  --accent: #a3341f;
+  --pad: clamp(1rem, 4vw, 3.5rem);
+}
+
+[data-theme="dark"] {
+  --paper: #14110d;
+  --paper-2: #1e1a15;
+  --ink: #f1ead9;
+  --ink-2: #b4a896;
+  --rule: #3a342b;
+  --accent: #e0705a;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+h1, h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 600; margin: 0; }
+h1 { font-size: clamp(1.25rem, 3.5vw, 1.75rem); }
+h2 { font-size: clamp(1.05rem, 2.5vw, 1.4rem); }
+p { margin: 0.5rem 0 0; max-width: 62ch; }
+.ringkas { color: var(--ink-2); }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Satu-satunya kontrol di halaman ini. 44px adalah tinggi minimum sasaran sentuh. */
+button {
+  min-height: 44px;
+  padding: 0 0.9rem;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+button:hover { border-color: var(--ink-2); }
+button:active { background: var(--paper-2); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15); }
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem var(--pad);
+  border-bottom: 1px solid var(--rule);
+}
+.bar-note { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.bar-note > span, .muted { color: var(--ink-2); font-size: 0.85rem; }
+
+main { padding: 0 var(--pad); }
+section { padding: clamp(1.5rem, 4vw, 3rem) 0; }
+section + section { border-top: 1px solid var(--rule); }
+
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+tbody th { width: 34%; min-width: 9rem; font-weight: 500; color: var(--ink-2); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: none; }
+
+ul { margin: 0.75rem 0 0; padding-left: 1.1rem; }
+li + li { margin-top: 0.4rem; }
+a { color: var(--accent); }
+
+/* Tautan di halaman ini berdiri sendiri (bukan di tengah kalimat), jadi boleh diberi tinggi
+   sentuh 44px tanpa mengganggu aliran teks. */
+main a { display: inline-flex; align-items: center; min-height: 44px; vertical-align: middle; }
+
+/* Layar lebar: baris tabel diberi napas lebih. */
+@media (min-width: 68rem) {
+  th, td { padding: 0.8rem 0.75rem; }
+}

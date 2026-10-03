@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data diri</title>
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="bar">
+  <h1 data-cfg="nama">Nama Kamu</h1>
+  <div class="bar-note">
+    <span data-cfg="peran">Peran atau profesi</span>
+    <button id="tema" type="button" aria-pressed="false">Mode gelap</button>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h2 data-cfg="judul">Data diri</h2>
+    <p data-cfg="ringkas" class="ringkas"></p>
+    <p id="kosong" class="muted" hidden></p>
+    <table>
+      <tbody id="profil"></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Keahlian</h2>
+    <ul id="keahlian"></ul>
+  </section>
+
+  <section>
+    <h2>Tautan</h2>
+    <ul id="tautan"></ul>
+  </section>
+</main>
+</body>
+</html>

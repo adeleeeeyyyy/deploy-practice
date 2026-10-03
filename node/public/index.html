@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data diri</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="bar">
+  <h1 data-isi="nama">Data diri</h1>
+  <div class="bar-note"><span data-isi="peran"></span></div>
+</header>
+
+<main>
+  <section>
+    <h2>Data diri</h2>
+    <p class="ringkas" data-isi="ringkas"></p>
+    <p id="kosong" class="muted" hidden></p>
+    <table id="tabel" hidden>
+      <tbody id="isi-tabel"></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Keahlian</h2>
+    <ul id="keahlian"></ul>
+  </section>
+
+  <section>
+    <h2>Tautan</h2>
+    <ul id="tautan"></ul>
+  </section>
+</main>
+
+<script>
+// Halaman ini sengaja tanpa berkas JS terpisah: mengubah isi data diri cukup di node/config.json
+async function muat() {
+  const kosong = document.getElementById('kosong');
+  let data;
+  try {
+    // Jalur relatif: halaman ini boleh dibuka langsung di port Node maupun lewat /node/ nginx.
+    // Kalau server tidak menjawab, data tetap kosong dan halaman menampilkannya sebagai belum diisi.
+    const respons = await fetch('api/info');
+    if (!respons.ok) throw new Error();
+    data = await respons.json();
+  } catch {
+    kosong.textContent = 'Data diri belum diisi.';
+    kosong.hidden = false;
+    return;
+  }
+
+  for (const el of document.querySelectorAll('[data-isi]')) {
+    el.textContent = data[el.dataset.isi] ?? '';
+  }
+  document.title = data.nama || 'Data diri';
+
+  const baris = (label, nilai) => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    const td = document.createElement('td');
+    th.scope = 'row';
+    th.textContent = label;
+    td.textContent = nilai;
+    tr.append(th, td);
+    return tr;
+  };
+
+  const { profil = [], keahlian = [], tautan = [] } = data;
+  const isiTabel = document.getElementById('isi-tabel');
+  if (!profil.length) {
+    kosong.textContent = 'Data diri belum diisi.';
+    kosong.hidden = false;
+  } else {
+    for (const p of profil) isiTabel.append(baris(p.label, p.nilai));
+    document.getElementById('tabel').hidden = false;
+  }
+
+  const isiKeahlian = document.getElementById('keahlian');
+  if (!keahlian.length) {
+    const li = document.createElement('li');
+    li.className = 'muted';
+    li.textContent = 'Belum diisi.';
+    isiKeahlian.append(li);
+  } else {
+    for (const k of keahlian) {
+      const li = document.createElement('li');
+      li.textContent = k;
+      isiKeahlian.append(li);
+    }
+  }
+
+  const isiTautan = document.getElementById('tautan');
+  if (!tautan.length) {
+    const li = document.createElement('li');
+    li.className = 'muted';
+    li.textContent = 'Belum diisi.';
+    isiTautan.append(li);
+  }
+  for (const t of tautan) {
+    const li = document.createElement('li');
+    if (t.alamat) {
+      const a = document.createElement('a');
+      a.href = t.alamat;
+      a.textContent = t.label;
+      li.append(a);
+    } else {
+      li.append(document.createTextNode(`${t.label}: belum diisi`));
+    }
+    isiTautan.append(li);
+  }
+}
+
+muat();
+</script>
+</body>
+</html>

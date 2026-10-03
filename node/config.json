@@ -1,0 +1,16 @@
+{
+  "nama": "Nama Kamu",
+  "peran": "Peran atau profesi",
+  "ringkas": "Satu dua baris tentang kamu.",
+  "profil": [
+    { "label": "Nama lengkap", "nilai": "Nama Kamu" },
+    { "label": "Peran", "nilai": "Peran atau profesi" },
+    { "label": "Domisili", "nilai": "Kota, negara" },
+    { "label": "Surel", "nilai": "nama@contoh.id" }
+  ],
+  "keahlian": ["Contoh keahlian 1", "Contoh keahlian 2"],
+  "tautan": [
+    { "label": "Surel", "alamat": "mailto:nama@contoh.id" },
+    { "label": "GitHub", "alamat": "" }
+  ]
+}
